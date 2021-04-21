@@ -1,42 +1,42 @@
-import json
-from selenium import webdriver
-from bs4 import BeautifulSoup
-from datetime import datetime
+import src.scratch
 
+class ORscratch(src.scratch.ExtractScratch):
 
-
-
-def getOregonScatchGameLinks(driver):
-    driver.get(url)
-    gameDetailsDict = driver.execute_script("return scratchIts")
-    return gameDetailsDict
-
+    def __init__(self):
+        super().__init__()
+        self.URL = 'https://www.oregonlottery.org/scratch-its/grid/'
     
-def getGameData(driver, url):
-    driver.get(url)
-    return driver.execute_script("return scratchGame")
+    
+    def get_Oregon_scatch_game_links(self):
+        '''
+        sends driver to OR scratch grid and gets the java var scratchIts which contains the urls to each game. 
+        
+        '''
+        self.driver.get(self.URL)
+        self.game_details_dict = self.driver.execute_script("return scratchIts")
+      
 
-
-# disables chrome from loading images 
-# https://stackoverflow.com/questions/28070315/python-disable-images-in-selenium-google-chromedriver
-chrome_options = webdriver.ChromeOptions()
-prefs = {"profile.managed_default_content_settings.images": 2}
-chrome_options.add_experimental_option("prefs", prefs)
-
-#creates a selenium chrome driver
-path_to_chromeDriver = '/Users/drahcir1/Documents/chromedriver'
-driver = webdriver.Chrome(path_to_chromeDriver,options=chrome_options)
-driver.implicitly_wait(5)
-
-url = "https://www.oregonlottery.org/scratch-its/grid/"
-driver.get(url)
-
-#contains links to individual games
-gameMetaData = getOregonScatchGameLinks(driver)
-
-gamesData = [getGameData(driver, game["link"]) for game in gameMetaData]
-
-
-today = datetime.today().strftime('%Y%m%d')
-with open(f'data/oregon/{today}_ORscratchers.json', 'w') as fp:
-    json.dump(gamesData, fp)
+    def get_game_data(self,game_url):
+        self.driver.get(game_url)
+        try:
+            output = self.driver.execute_script("return scratchGame")
+        except JavasciptException:
+            output = None
+            
+        return output
+    
+    def get_games_data(self):
+        self.get_Oregon_scatch_game_links()     
+        self.games_data = [self.get_game_data(game['link']) for game in self.game_details_dict]
+                                        
+    
+    def extract_Oregon(self):
+        
+        self.chrome_driver()
+        self.get_games_data()
+        self.save_json("Oregon", "OR")
+        self.driver.close()
+        
+if __name__ == "__main__":
+    OR = ORscratch()
+    OR.extract_Oregon()
