@@ -1,6 +1,12 @@
 data/
+zold/
+src/tools.py
 
-.ipynb
-.json
-.html
+chromedriver
+geckodriver
+
+helloworld.py
+*.ipynb
+*.json
+*.html
 
