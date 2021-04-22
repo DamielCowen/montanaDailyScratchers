@@ -9,4 +9,5 @@ helloworld.py
 *.ipynb
 *.json
 *.html
+*.pyc
 
