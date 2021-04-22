@@ -56,19 +56,21 @@ def getGameRowData(gameTag):
         })
     return output
 
-today = datetime.today().strftime('%Y%m%d')
-games_data = {"date":today}
-game_data = []
+if __name__ == "__main__":
 
-for gameTag in scratchGameResultSet:
-    output = {}
-    output['name'] = getGameName(gameTag)
-    output['overallOdds'] = getGameOverallOdds(gameTag)
-    output["price"] = getGamePrice(gameTag)
-    output['data'] = getGameRowData(gameTag)
-    game_data.append(output)
-games_data['data'] = game_data
+    today = datetime.today().strftime('%Y%m%d')
+    games_data = {"date":today}
+    game_data = []
+
+    for gameTag in scratchGameResultSet:
+        output = {}
+        output['name'] = getGameName(gameTag)
+        output['overallOdds'] = getGameOverallOdds(gameTag)
+        output["price"] = getGamePrice(gameTag)
+        output['data'] = getGameRowData(gameTag)
+        game_data.append(output)
+    games_data['data'] = game_data
 
 
-with open(f'data/montana/{today}_MTscratchers.json', 'w') as fp:
-    json.dump(games_data, fp)
+    with open(f'data/montana/{today}_MTscratchers.json', 'w') as fp:
+        json.dump(games_data, fp)
