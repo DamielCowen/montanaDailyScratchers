@@ -7,7 +7,7 @@ class ORscratch(src.scratch.ExtractScratch):
         self.URL = 'https://www.oregonlottery.org/scratch-its/grid/'
     
     
-    def get_Oregon_scatch_game_links(self):
+    def get_scatch_game_links(self):
         '''
         sends driver to OR scratch grid and gets the java var scratchIts which contains the urls to each game. 
         
@@ -26,7 +26,7 @@ class ORscratch(src.scratch.ExtractScratch):
         return output
     
     def get_games_data(self):
-        self.get_Oregon_scatch_game_links()     
+        self.get_scatch_game_links()     
         self.games_data = [self.get_game_data(game['link']) for game in self.game_details_dict]
                                         
     

@@ -5,6 +5,16 @@ from bs4 import BeautifulSoup
 class COscratch(src.scratch.ExtractScratch):
 
     def __init__(self):
+        '''
+        Extract Colorado:
+        -Imports: BS4, src.scract
+        -get_games_data() selenium goes to grid page and gets URLs for all games.
+        -- saves links to game_URLs
+        -get_all_games_data() sends selenium to each page and scrapes game data
+        -- saves to games_data list(dicts{})
+        - saves json
+        
+        '''
         super().__init__()
         self.URL = 'https://www.coloradolottery.com/en/games/scratch/'
         
@@ -25,7 +35,7 @@ class COscratch(src.scratch.ExtractScratch):
         after get_games_data is called -> takes an individual game URL and returns details in ditconary
         '''
         self.driver.get(game_URL)
-        soup = BeautifulSoup(self.driver.page_source)
+        soup = BeautifulSoup(self.driver.page_source, features ="lxml")
         output = {"name":self.get_game_name(soup),
                   "cost":self.get_game_cost(soup),
                   "top_prize":self.get_top_prize(soup),
@@ -82,7 +92,7 @@ class COscratch(src.scratch.ExtractScratch):
         self.games_data = [self.get_game_data(url) for url in self.game_URLs]
         
  
-    def scrape_Colorado(self):
+    def extract_Colorado(self):
         self.get_games_data()
         self.get_all_games_data()
         self.save_json("colorado","CO")
@@ -92,5 +102,5 @@ class COscratch(src.scratch.ExtractScratch):
         
 if __name__ == "__main__":
     CO = COscratch()
-    CO.scrape_Colorado()
+    CO.extract_Colorado()
 

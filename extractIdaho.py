@@ -31,7 +31,7 @@ def getGameRowData(gameTag):
     return output
 
 
-path_to_chromeDriver = '/Users/drahcir1/Documents/chromedriver'
+path_to_chromeDriver = '/Users/drahcir1/Documents/montanaDailyScratchers/src/chromedriver'
 url ='https://www.idaholottery.com/games/scratch'
 
 # disables chrome from loading images 
@@ -44,7 +44,7 @@ chrome_options.add_experimental_option("prefs", prefs)
 driver = webdriver.Chrome(path_to_chromeDriver,chrome_options=chrome_options)
 driver.implicitly_wait(5)
 driver.get(url)
-soup = BeautifulSoup(driver.page_source)
+soup = BeautifulSoup(driver.page_source,features="lxml")
 driver.close()
 
 games = soup.findAll("div",{"class":"game__content"})

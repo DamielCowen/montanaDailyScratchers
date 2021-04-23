@@ -3,7 +3,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-path_to_chromeDriver = '/Users/drahcir1/Documents/chromedriver'
+path_to_chromeDriver = '/Users/drahcir1/Documents/montanaDailyScratchers/src/chromedriver'
 url = 'https://www.montanalottery.com/en/view/scratch'
 
 # disables chrome from loading images 
@@ -16,7 +16,7 @@ chrome_options.add_experimental_option("prefs", prefs)
 driver = webdriver.Chrome(path_to_chromeDriver,options=chrome_options)
 driver.implicitly_wait(5)
 driver.get(url)
-soup = BeautifulSoup(driver.page_source)
+soup = BeautifulSoup(driver.page_source,features="lxml")
 driver.close()
 
 scratchGameLobby = soup.find("div",{"class":"scratch-game-lobby row remove-gutter bgg-main"}) #finds the center column with all game data

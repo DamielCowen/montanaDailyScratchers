@@ -1,12 +1,14 @@
 import json
 from selenium import webdriver
+import requests
+from bs4 import BeautifulSoup
 from datetime import datetime
 from re import sub
 
 class ExtractScratch():
     
     def __init__(self):
-        self.path_to_chromeDriver = '/Users/drahcir1/Documents/chromedriver'
+        self.path_to_chromeDriver = '/Users/drahcir1/Documents/montanaDailyScratchers/src/chromedriver'
         
     def chrome_driver(self):
         """
@@ -19,7 +21,10 @@ class ExtractScratch():
         self.chrome_options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(self.path_to_chromeDriver,options=self.chrome_options)
         self.driver.implicitly_wait(5)
-        
+    
+    def request_soup(self, url):
+        response = requests.get(url)
+        return BeautifulSoup(response.content, features="lxml")
         
     def random_user_agent(self):
         pass

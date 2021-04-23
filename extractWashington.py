@@ -6,8 +6,8 @@ from datetime import datetime
 class scrapeScratchGames:
     
     def __init__(self):
-        self.url ='https://www.walottery.com/Scratch/'
-        self.path_to_chromeDriver = '/Users/drahcir1/Documents/chromedriver'
+        self.URL ='https://www.walottery.com/Scratch/'
+        self.path_to_chrome_driver = '/Users/drahcir1/Documents/montanaDailyScratchers/src/chromedriver'
         
     def chrome_driver(self):
         """
@@ -18,7 +18,7 @@ class scrapeScratchGames:
         self.chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images": 2}
         self.chrome_options.add_experimental_option("prefs", prefs)
-        self.driver = webdriver.Chrome(self.path_to_chromeDriver,options=self.chrome_options)
+        self.driver = webdriver.Chrome(self.path_to_chrome_driver,options=self.chrome_options)
         self.driver.implicitly_wait(5)
         
     def get_games_data(self):
@@ -29,7 +29,7 @@ class scrapeScratchGames:
         retrives the varialbe and closes the driver
         
         ''' 
-        self.driver.get(self.url)
+        self.driver.get(self.URL)
         self.games_data = self.driver.execute_script('return WaLottery.Scratch.data')
         self.driver.close()
         
@@ -39,7 +39,13 @@ class scrapeScratchGames:
         with open (f"data/washington/{today}_WAscratchers.json", "w") as file:
             json.dump(self.games_data, file)
             
+            
     def extract_Washington(self):
         self.chrome_driver()
         self.get_games_data()
         self.save_json()
+        
+        
+if __name__ =="__main__":
+    WA = scrapeScratchGames()
+    WA.extract_Washington()

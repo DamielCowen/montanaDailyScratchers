@@ -81,6 +81,10 @@ class ARscratch(src.scratch.ExtractScratch):
         return table
 
     def scrape_game_page(self, soup):
+        '''
+        input: BS4.soup of game page
+        returns: dict() of game data
+        '''
         game_data = {}
         game_data['Name'] = self.get_game_name(soup)
         game_data['Cost'] = self.get_game_cost(soup)
@@ -90,6 +94,7 @@ class ARscratch(src.scratch.ExtractScratch):
         return game_data
 
     def extract_Arkansas(self):
+        
         self.get_links_from_all_pages()
         self.games_data = []
         for url in self.game_URLs:
